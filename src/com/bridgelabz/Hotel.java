@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
@@ -13,15 +14,64 @@ import java.util.Scanner;
 import static java.util.concurrent.TimeUnit.DAYS;
 
 public class Hotel {
+    private long totalAmmount;
     Scanner scanner = new Scanner(System.in);
-    private String hotelName, fromDate, toDate;
+    private String hotelName;
+    private String fromDate;
+    private String toDate;
     private int regulerCustomerRate;
-    private LocalDate fromDateObject;
-    private LocalDate toDateObject;
 
     public Hotel(String name, int rate) {
         hotelName = name;
         regulerCustomerRate = rate;
+    }
+
+    public long getTotalAmmount() {
+        return totalAmmount;
+    }
+
+    public void setTotalAmmount(long totalAmmount) {
+        this.totalAmmount = totalAmmount;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+    public int getRegulerCustomerRate() {
+        return regulerCustomerRate;
+    }
+
+    public void setRegulerCustomerRate(int regulerCustomerRate) {
+        this.regulerCustomerRate = regulerCustomerRate;
     }
 
     public void display() {
@@ -30,33 +80,20 @@ public class Hotel {
     }
 
 
-    public void input() {
-        System.out.println("Enter the start date to book : \n NOTE - The date should be in given formatte 'YYYY-MM-DD'");
-        fromDate = scanner.next();
-        System.out.println("Enter the end date to book : \n NOTE - The date should be in given formatte 'YYYY-MM-DD'");
-        toDate = scanner.next();
-        try {
-            this.fromDateObject = LocalDate.parse(fromDate);
-            this.toDateObject = LocalDate.parse(toDate);
-            System.out.println("object  'date' : " + fromDateObject);
-            System.out.println("object  'date' : " + toDateObject);
-        } catch (Exception e) {
-            System.out.println("exception genrated " + e);
-        }
-    }
 
-    public long findAmmount() {
-        long numberOfDays = 0, totalAmmount;
+
+    public long findAmmount(LocalDate fromDateObject, LocalDate toDateObject) {
+        long numberOfDays = 0;
         try {
 
-            numberOfDays = ChronoUnit.DAYS.between(fromDateObject,toDateObject);
+            numberOfDays = ChronoUnit.DAYS.between(fromDateObject, toDateObject);
             System.out.println(numberOfDays);
+            totalAmmount = numberOfDays * regulerCustomerRate;
+            System.out.println(totalAmmount);
 
         } catch (Exception e) {
             System.out.println(" exeception genrated in find ammount" + e);
         }
-        totalAmmount = numberOfDays * regulerCustomerRate;
         return totalAmmount;
-
     }
 }
